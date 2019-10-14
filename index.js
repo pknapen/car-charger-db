@@ -22,7 +22,7 @@ passport.use(new Strategy((username, password, callback) => {
     }
 
     bcrypt.compare(password, dbResults[0].password).then(bcryptResult => {
-      if(bcryptResult)
+      if(bcryptResult == true)
       {
         callback(null, dbResults[0]);
       }
