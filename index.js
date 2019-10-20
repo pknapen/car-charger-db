@@ -40,7 +40,7 @@ passport.use(new Strategy((username, password, callback) => {
 app.get('/noauth', (req, res) => res.send('Hello World!'));
 
 app.get('/auth', passport.authenticate('basic', { session: false }),
-        (req, res) => res.send('Hello Protected World!'));
+        (req, res) => res.send('This should be the part where the payment starts...'));
 
 app.get('/users', (req, res) => {
   db.query('SELECT id, username FROM users').then(results => {
@@ -91,7 +91,7 @@ app.get('/chargers/:id', (req, res) => {
         });
 
 app.post('/chargers', (req, res) => {
-    db.query('INSERT INTO chargers (name, code, longitude, latitude, type, price) VALUES (?,?,?,?,?,?)', [req.body.name, req.body.code, req.body.longitude, req.body.latitude, req.body.type, req.body.price])
+    db.query('INSERT INTO chargers (name, code, location, longitude, latitude, type, price, status) VALUES (?,?,?,?,?,?,?,?)', [req.body.name, req.body.code, req.body.location, req.body.longitude, req.body.latitude, req.body.type, req.body.price, req.body.status])
     .then(results => {
         console.log(results);
         res.sendStatus(201);
@@ -113,10 +113,12 @@ Promise.all(
           id INT AUTO_INCREMENT PRIMARY KEY,
           name VARCHAR(256),
           code VARCHAR(256),
+          location VARCHAR(256),
           longitude VARCHAR(256),
           latitude VARCHAR(256),
           type VARCHAR(256),
-          price VARCHAR(256)
+          price VARCHAR(256),
+          status VARCHAR(256)
       )`)
   ]
 ).then(() => {
