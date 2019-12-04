@@ -6,7 +6,7 @@ try {
     host            : 'localhost',
     user            : 'root',
     password        : 'root',
-    database        : 'car_charge_db'
+    database        : 'menu'
   });
   
 } catch (error) {
